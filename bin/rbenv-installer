@@ -53,16 +53,16 @@ done
 
 # Show help if `.rbenv` is not in the path:
 if [ ! $(which rbenv) ]; then
+  profile=$([[ -f $HOME/.profile ]] && echo "$HOME/.profile" || echo "$HOME/.bash_profile" )
+  echo "Seems you still have not added 'rbenv' to the load path. Modifying your $profile to support rbenv."
+
   echo "
-Seems you still have not added 'rbenv' to the load path:
-
-# ~/.bash_profile:
-
 export RBENV_ROOT=\"\${HOME}/.rbenv\"
 
 if [ -d \"\${RBENV_ROOT}\" ]; then
   export PATH=\"\${RBENV_ROOT}/bin:\${PATH}\"
   eval \"\$(rbenv init -)\"
-fi
-"
+fi" >> $profile
+
+  source $profile
 fi
